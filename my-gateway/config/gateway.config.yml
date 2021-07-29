@@ -1,0 +1,48 @@
+http:
+  port: 8081
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  signup:
+    host: localhost
+    paths: '/signup'
+  signin:
+    host: localhost
+    paths: '/signin'
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+  authSevice:
+    url: 'http://localhost:8082'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  registerPipeline:
+    apiEndpoints:
+      - signup
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: authSevice
+              changeOrigin: true
+
+  loginPipeline1:
+    apiEndpoints:
+      - signin
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: authSevice
+              changeOrigin: true
