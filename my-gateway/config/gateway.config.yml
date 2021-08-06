@@ -10,11 +10,31 @@ apiEndpoints:
   signin:
     host: localhost
     paths: '/signin'
+  signout:
+    host: localhost
+    paths: '/signout'
+  postProject:
+    host: localhost
+    paths: '/project'
+  getProject:
+    host: localhost
+    paths: '/project'
+  getProjectKanban:
+    host: localhost
+    paths: '/project/kanban'
+  getProjectScrum:
+    host: localhost
+    paths: '/project/scrum'
+  getProjectBugtracking:
+    host: localhost
+    paths: '/project/bugtracking'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
   authSevice:
     url: 'http://localhost:8082'
+  projectSevice:
+    url: 'http://localhost:8083'
 policies:
   - basic-auth
   - cors
@@ -46,3 +66,64 @@ pipelines:
           - action:
               serviceEndpoint: authSevice
               changeOrigin: true
+  logoutPipeline1:
+    apiEndpoints:
+      - signout
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: authSevice
+              changeOrigin: true
+
+  postProjectPipeline:
+    apiEndpoints:
+      - postProject
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: projectSevice
+              changeOrigin: true 
+  getProjectPipeline:
+    apiEndpoints:
+      - getProject
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: projectSevice
+              changeOrigin: true 
+  getProjectKanbanPipeline:
+    apiEndpoints:
+      - getProjectKanban
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: projectSevice
+              changeOrigin: true 
+  getProjectScrumPipeline:
+    apiEndpoints:
+      - getProjectScrum
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: projectSevice
+              changeOrigin: true 
+  getProjectBugtrackingPipeline:
+    apiEndpoints:
+      - getProjectBugtracking
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: projectSevice
+              changeOrigin: true 
