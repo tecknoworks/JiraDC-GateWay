@@ -43,6 +43,12 @@ apiEndpoints:
   getLabel:
     host: localhost
     paths: '/label'
+  getLinkedIssues:
+    host: localhost
+    paths: '/linkedissues'
+  getSprint:
+    host: localhost
+    paths: '/sprint'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -58,6 +64,10 @@ serviceEndpoints:
     url: 'http://localhost:8086'
   labelSevice:
     url: 'http://localhost:8088'
+  linkedissuesSevice:
+    url: 'http://localhost:8089'
+  sprintSevice:
+    url: 'http://localhost:8090'
 policies:
   - basic-auth
   - cors
@@ -199,4 +209,24 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: labelSevice
+              changeOrigin: true 
+  getLinkedIssuesTypePipeline:
+    apiEndpoints:
+      - getLinkedIssues
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: linkedissuesSevice
+              changeOrigin: true 
+  getSprintTypePipeline:
+    apiEndpoints:
+      - getSprint
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: sprintSevice
               changeOrigin: true 
