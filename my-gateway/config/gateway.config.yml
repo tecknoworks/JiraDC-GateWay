@@ -28,6 +28,15 @@ apiEndpoints:
   getProjectBugtracking:
     host: localhost
     paths: '/project/bugtracking'
+  getAllUsers:
+    host: localhost
+    paths: '/allusers'
+  getPriority:
+    host: localhost
+    paths: '/priority'
+  getComponent:
+    host: localhost
+    paths: '/component'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -35,6 +44,10 @@ serviceEndpoints:
     url: 'http://localhost:8082'
   projectSevice:
     url: 'http://localhost:8083'
+  prioritySevice:
+    url: 'http://localhost:8085'
+  componentSevice:
+    url: 'http://localhost:8087'
 policies:
   - basic-auth
   - cors
@@ -126,4 +139,34 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: projectSevice
+              changeOrigin: true 
+  getAllUsersPipeline:
+    apiEndpoints:
+      - getAllUsers
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: authSevice
+              changeOrigin: true 
+  getPriorityPipeline:
+    apiEndpoints:
+      - getPriority
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: prioritySevice
+              changeOrigin: true 
+  getComponentPipeline:
+    apiEndpoints:
+      - getComponent
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: componentSevice
               changeOrigin: true 
