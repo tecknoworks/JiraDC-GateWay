@@ -37,6 +37,9 @@ apiEndpoints:
   getComponent:
     host: localhost
     paths: '/component'
+  postComponent:
+    host: localhost
+    paths: '/component'
   getIssue:
     host: localhost
     paths: '/issue'
@@ -190,6 +193,16 @@ pipelines:
           - action:
               serviceEndpoint: componentSevice
               changeOrigin: true
+  postComponentPipeline:
+    apiEndpoints:
+      - postComponent
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: componentSevice
+              changeOrigin: true 
   getIssueTypePipeline:
     apiEndpoints:
       - getIssue
