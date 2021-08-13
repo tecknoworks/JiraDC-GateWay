@@ -52,6 +52,18 @@ apiEndpoints:
   getSprint:
     host: localhost
     paths: '/sprint'
+  postWorkItem:
+    host: localhost
+    paths: '/workItem'
+  getWorkItem:
+    host: localhost
+    paths: '/workItem'
+  getWorkItemEpic:
+    host: localhost
+    paths: '/workItem/epic'
+  getIssueEpic:
+    host: localhost
+    paths: '/issue/epic'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -71,6 +83,8 @@ serviceEndpoints:
     url: 'http://localhost:8089'
   sprintSevice:
     url: 'http://localhost:8090'
+  workItemSevice:
+    url: 'http://localhost:8084'
 policies:
   - basic-auth
   - cors
@@ -243,3 +257,43 @@ pipelines:
           - action:
               serviceEndpoint: sprintSevice
               changeOrigin: true 
+  postWorkItemPipeline:
+    apiEndpoints:
+      - postWorkItem
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true
+  getWorkItemPipeline:
+    apiEndpoints:
+      - getWorkItem
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true 
+  getWorkItemEpicPipeline:
+    apiEndpoints:
+      - getWorkItemEpic
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true 
+  getIssueEpicPipeline:
+    apiEndpoints:
+      - getIssueEpic
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: issueSevice
+              changeOrigin: true
