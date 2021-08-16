@@ -58,9 +58,15 @@ apiEndpoints:
   getWorkItem:
     host: localhost
     paths: '/workItem'
+  getWorkItemProject:
+    host: localhost
+    paths: '/workItemProject'
   getWorkItemEpic:
     host: localhost
     paths: '/workItem/epic'
+  getWorkItemById:
+    host: localhost
+    paths: '/workItemById'
   getIssueEpic:
     host: localhost
     paths: '/issue/epic'
@@ -287,6 +293,16 @@ pipelines:
           - action:
               serviceEndpoint: workItemSevice
               changeOrigin: true 
+  getWorkItemByIdPipeline:
+    apiEndpoints:
+      - getWorkItemById
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true 
   getIssueEpicPipeline:
     apiEndpoints:
       - getIssueEpic
@@ -297,3 +313,13 @@ pipelines:
           - action:
               serviceEndpoint: issueSevice
               changeOrigin: true
+  getWorkItemProjectPipeline:
+    apiEndpoints:
+      - getWorkItemProject
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true 
