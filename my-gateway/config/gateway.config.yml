@@ -52,6 +52,9 @@ apiEndpoints:
   getSprint:
     host: localhost
     paths: '/sprint'
+  postSprint:
+    host: localhost
+    paths: '/sprint'
   postWorkItem:
     host: localhost
     paths: '/workItem'
@@ -70,6 +73,9 @@ apiEndpoints:
   getIssueEpic:
     host: localhost
     paths: '/issue/epic'
+  updateComponent:
+    host: localhost
+    paths: '/component'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -223,6 +229,16 @@ pipelines:
           - action:
               serviceEndpoint: componentSevice
               changeOrigin: true 
+  updateComponentPipeline:
+    apiEndpoints:
+      - updateComponent
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: componentSevice
+              changeOrigin: true 
   getIssueTypePipeline:
     apiEndpoints:
       - getIssue
@@ -256,6 +272,16 @@ pipelines:
   getSprintTypePipeline:
     apiEndpoints:
       - getSprint
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: sprintSevice
+              changeOrigin: true 
+  postSprintTypePipeline:
+    apiEndpoints:
+      - postSprint
     policies:
     # Uncomment `key-auth:` when instructed to in the Getting Started guide.
     # - key-auth:
