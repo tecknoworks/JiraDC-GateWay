@@ -55,6 +55,9 @@ apiEndpoints:
   postSprint:
     host: localhost
     paths: '/sprint'
+  updateSprint:
+    host: localhost
+    paths: '/sprint'
   postWorkItem:
     host: localhost
     paths: '/workItem'
@@ -76,6 +79,12 @@ apiEndpoints:
   updateComponent:
     host: localhost
     paths: '/component'
+  changeItemPosition:
+    host: localhost
+    paths: '/workItemChangePosition'
+  changeItemPositionBTSprints:
+    host: localhost
+    paths: '/workItemChangeSprint'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -289,6 +298,16 @@ pipelines:
           - action:
               serviceEndpoint: sprintSevice
               changeOrigin: true 
+  updateSprintPipeline:
+    apiEndpoints:
+      - updateSprint
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: sprintSevice
+              changeOrigin: true
   postWorkItemPipeline:
     apiEndpoints:
       - postWorkItem
@@ -342,6 +361,26 @@ pipelines:
   getWorkItemProjectPipeline:
     apiEndpoints:
       - getWorkItemProject
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true 
+  changeItemPositionPipeline:
+    apiEndpoints:
+      - changeItemPosition
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true 
+  changeItemPositionBTSprintsPipeline:
+    apiEndpoints:
+      - changeItemPositionBTSprints
     policies:
     # Uncomment `key-auth:` when instructed to in the Getting Started guide.
     # - key-auth:
