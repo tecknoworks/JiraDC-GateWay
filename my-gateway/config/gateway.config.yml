@@ -76,6 +76,12 @@ apiEndpoints:
   updateComponent:
     host: localhost
     paths: '/component'
+  postComment:
+    host: localhost
+    paths: '/comment'
+  putComment:
+    host: localhost
+    paths: '/comment'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -97,6 +103,8 @@ serviceEndpoints:
     url: 'http://localhost:8090'
   workItemSevice:
     url: 'http://localhost:8084'
+  commentSevice:
+    url: 'http://localhost:8091'
 policies:
   - basic-auth
   - cors
@@ -348,4 +356,24 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: workItemSevice
+              changeOrigin: true
+  postCommentPipeline:
+    apiEndpoints:
+      - postComment
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: commentSevice
               changeOrigin: true 
+  putCommentPipeline:
+    apiEndpoints:
+      - putComment
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: commentSevice
+              changeOrigin: true
