@@ -64,6 +64,9 @@ apiEndpoints:
   getWorkItem:
     host: localhost
     paths: '/workItem'
+  updateWorkItem:
+    host: localhost
+    paths: '/updateWorkItem'
   getWorkItemProject:
     host: localhost
     paths: '/workItemProject'
@@ -91,6 +94,12 @@ apiEndpoints:
   changeItemPositionBTSprints:
     host: localhost
     paths: '/workItemChangeSprint'
+  changeWorkItemPositionStatus:
+    host: localhost
+    paths: '/workItemChangePositionStatus'
+  changeWorkItemStatus:
+    host: localhost
+    paths: '/workItemChangeStatus'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -416,3 +425,33 @@ pipelines:
           - action:
               serviceEndpoint: workItemSevice
               changeOrigin: true 
+  workItemPositionStatusPipeline:
+    apiEndpoints:
+      - changeWorkItemPositionStatus
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true
+  workItemStatusPipeline:
+    apiEndpoints:
+      - changeWorkItemStatus
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true
+  updateWorkItemPipeline:
+    apiEndpoints:
+      - updateWorkItem
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: workItemSevice
+              changeOrigin: true
