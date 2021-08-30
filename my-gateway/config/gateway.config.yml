@@ -100,6 +100,9 @@ apiEndpoints:
   changeWorkItemStatus:
     host: localhost
     paths: '/workItemChangeStatus'
+  getComponentByProject:
+    host: localhost
+    paths: '/componentProject'
 serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
@@ -455,3 +458,14 @@ pipelines:
           - action:
               serviceEndpoint: workItemSevice
               changeOrigin: true
+  getComponentByProject:
+    apiEndpoints:
+      - getComponentByProject
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: componentSevice
+              changeOrigin: true 
+              
